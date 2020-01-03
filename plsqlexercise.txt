@@ -1,0 +1,517 @@
+SQL> begin
+  2  for i in 1..10 loop
+  3  dbms_output.put_line(i);
+  4  end loop;
+  5  end;
+  6  /
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  set serveroutput on
+  2  begin
+  3  for i in 1..10 loop
+  4  dbms_output.put_line(i);
+  5  end loop;
+  6* end;
+SQL> /
+set serveroutput on
+    *
+ERROR at line 1:
+ORA-00922: missing or invalid option 
+
+
+SQL> set serveroutput on
+SQL> ed
+Wrote file afiedt.buf
+
+  1  begin
+  2  for i in 1..10 loop
+  3  dbms_output.put_line(i);
+  4  end loop;
+  5* end;
+SQL> /
+1                                                                               
+2                                                                               
+3                                                                               
+4                                                                               
+5                                                                               
+6                                                                               
+7                                                                               
+8                                                                               
+9                                                                               
+10                                                                              
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  a number;
+  3  begin
+  4  a:=19;
+  5  if a%2=0 then
+  6  dbms_output.put_line(a||' is an even number');
+  7  else
+  8  dbms_output.put_line(a||' is an odd number');
+  9  end if;
+ 10* end;
+SQL> /
+if a%2=0 then
+     *
+ERROR at line 5:
+ORA-06550: line 5, column 6: 
+PLS-00103: Encountered the symbol "2" when expecting one of the following: 
+type <an identifier> <a double-quoted delimited-identifier> 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  a number;
+  3  begin
+  4  a:=19;
+  5  if mod(a,2)=0 then
+  6  dbms_output.put_line(a||' is an even number');
+  7  else
+  8  dbms_output.put_line(a||' is an odd number');
+  9  end if;
+ 10* end;
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> set serveroutput on
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  a number;
+  3  begin
+  4  a:=19;
+  5  if mod(a,2)=0 then
+  6  dbms_output.put_line(a||' is an even number');
+  7  else
+  8  dbms_output.put_line(a||' is an odd number');
+  9  end if;
+ 10* end;
+SQL> /
+19 is an odd number                                                             
+
+PL/SQL procedure successfully completed.
+
+  1  declare
+  2  a char(10);
+  3  b char(10);
+  4  begin
+  5  a:='some    ';
+  6  b:='some';
+  7  dbms_output.put_line(a);
+  8  dbms_output.put_line(b);
+  9* end;
+SQL> /
+some                                                                            
+some                                                                            
+
+PL/SQL procedure successfully completed.
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  a varchar2(10);
+  3  b varchar2(10);
+  4  begin
+  5  a:='some    ';
+  6  b:='some';
+  7  if a=b then
+  8  dbms_output.put_line('a equals b');
+  9  else
+ 10  dbms_output.put_line('a  not equals b');
+ 11* end;
+SQL> /
+end;
+   *
+ERROR at line 11:
+ORA-06550: line 11, column 4: 
+PLS-00103: Encountered the symbol ";" when expecting one of the following: 
+if 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  a varchar2(10);
+  3  b varchar2(10);
+  4  begin
+  5  a:='some    ';
+  6  b:='some';
+  7  if a=b then
+  8  dbms_output.put_line('a equals b');
+  9  else
+ 10  dbms_output.put_line('a  not equals b');
+ 11  end if;
+ 12* end;
+SQL> /
+a  not equals b                                                                 
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  a char(10);
+  3  b char(10);
+  4  begin
+  5  a:='some    ';
+  6  b:='some';
+  7  if a=b then
+  8  dbms_output.put_line('a equals b');
+  9  else
+ 10  dbms_output.put_line('a  not equals b');
+ 11  end if;
+ 12* end;
+SQL> /
+a equals b                                                                      
+
+PL/SQL procedure successfully completed.
+
+SQL> begin
+  2  a number:=100;
+  3  while a>90
+  4  loop
+  5  dbms_output.put_line(a);
+  6  a:=a-1;
+  7  end loop;
+  8  end;
+  9  /
+a number:=100;
+  *
+ERROR at line 2:
+ORA-06550: line 2, column 3: 
+PLS-00103: Encountered the symbol "NUMBER" when expecting one of the following: 
+:= . ( @ % ; 
+The symbol "." was substituted for "NUMBER" to continue. 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  a number;
+  3  begin
+  4  a:=100;
+  5  while a>90
+  6  loop
+  7  dbms_output.put_line(a);
+  8  a:=a-1;
+  9  end loop;
+ 10* end;
+SQL> /
+100                                                                             
+99                                                                              
+98                                                                              
+97                                                                              
+96                                                                              
+95                                                                              
+94                                                                              
+93                                                                              
+92                                                                              
+91                                                                              
+
+PL/SQL procedure successfully completed.
+
+SQL> declare
+  2  create cursor c is select employee_id,last_name,salar y from employees where department_id=110;
+  3  begin
+  4  open c
+  5  fetch c in rec;
+  6  .
+SQL> spool off
+SQL> declare
+  2  create cursor c is select employee_id,last_name,salary from employees where department_id=110;
+  3  rec c%rowtype;
+  4  begin
+  5  open c;
+  6  fetch c in rec;
+  7  exit when c%notfound;
+  8  dbms_output.put_line(rec);
+  9  end loop;
+ 10  end;
+ 11  /
+create cursor c is select employee_id,last_name,salary from employees where department_id=110;
+*
+ERROR at line 2:
+ORA-06550: line 2, column 1: 
+PLS-00103: Encountered the symbol "CREATE" when expecting one of the following: 
+begin function pragma procedure subtype type <an identifier> 
+<a double-quoted delimited-identifier> current cursor delete 
+exists prior 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  create cursor c is select employee_id,last_name,salary from employees where department_id=110;
+  3  rec c%rowtype;
+  4  begin
+  5  open c;
+  6  loop
+  7  fetch c in rec;
+  8  exit when c%notfound;
+  9  dbms_output.put_line(rec);
+ 10  end loop;
+ 11* end;
+SQL> /
+create cursor c is select employee_id,last_name,salary from employees where department_id=110;
+*
+ERROR at line 2:
+ORA-06550: line 2, column 1: 
+PLS-00103: Encountered the symbol "CREATE" when expecting one of the following: 
+begin function pragma procedure subtype type <an identifier> 
+<a double-quoted delimited-identifier> current cursor delete 
+exists prior 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  cursor c is select employee_id,last_name,salary from employees where department_id=110;
+  3  rec c%rowtype;
+  4  begin
+  5  open c;
+  6  loop
+  7  fetch c in rec;
+  8  exit when c%notfound;
+  9  dbms_output.put_line(rec);
+ 10  end loop;
+ 11* end;
+SQL> /
+fetch c in rec;
+        *
+ERROR at line 7:
+ORA-06550: line 7, column 9: 
+PLS-00103: Encountered the symbol "IN" when expecting one of the following: 
+. into bulk 
+The symbol "into was inserted before "IN" to continue. 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  cursor c is select employee_id,last_name,salary from employees where department_id=110;
+  3  rec c%rowtype;
+  4  begin
+  5  open c;
+  6  loop
+  7  fetch c into rec;
+  8  exit when c%notfound;
+  9  dbms_output.put_line(rec);
+ 10  end loop;
+ 11* end;
+SQL> /
+dbms_output.put_line(rec);
+*
+ERROR at line 9:
+ORA-06550: line 9, column 1: 
+PLS-00306: wrong number or types of arguments in call to 'PUT_LINE' 
+ORA-06550: line 9, column 1: 
+PL/SQL: Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  cursor c is select employee_id,last_name,salary from employees where department_id=110;
+  3  rec c%rowtype;
+  4  begin
+  5  open c;
+  6  loop
+  7  fetch c into rec;
+  8  exit when c%notfound;
+  9  dbms_output.put_line(rec.employee_id||' '||rec.last_name||' '||rec.salary);
+ 10  end loop;
+ 11* end;
+SQL> /
+205 Higgins 12008                                                               
+206 Gietz 8300                                                                  
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  cursor c is select employee_id,last_name,salary from employees where department_id=110;
+  3  rec c%rowtype;
+  4  begin
+  5  open c;
+  6  loop
+  7  fetch c into rec;
+  8  exit when c%notfound;
+  9  dbms_output.put_line(c.employee_id||' '||c.last_name||' '||c.salary);
+ 10  end loop;
+ 11* end;
+SQL> /
+dbms_output.put_line(c.employee_id||' '||c.last_name||' '||c.salary);
+                       *
+ERROR at line 9:
+ORA-06550: line 9, column 24: 
+PLS-00225: subprogram or cursor 'C' reference is out of scope 
+ORA-06550: line 9, column 1: 
+PL/SQL: Statement ignored 
+
+
+SQL> create procedure something(a in number,b out number) as a number;b number;
+  2  begin
+  3  b=a*a;
+  4  end;
+  5  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create procedure something(a in number,b out number) as 
+  2  begin
+  3  b=a*a;
+  4* end;
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create procedure something(a in number,b out number) as 
+  2  begin
+  3  b=a*a;
+  4* end;
+SQL> /
+create procedure something(a in number,b out number) as 
+                 *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create procedure something1(a in number,b out number) as 
+  2  begin
+  3  b=a*a;
+  4* end;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create procedure something2(a in number,b out number) as 
+  2  begin
+  3  b:=a*a;
+  4* end;
+SQL> /
+
+Procedure created.
+
+SQL> begin
+  2  declare
+  3  n number;
+  4  begin
+  5  something2(n,x)
+  6  ;
+  7  dbms_output.put_line
+  8  (x);
+  9  end;
+ 10  /
+end;
+   *
+ERROR at line 9:
+ORA-06550: line 9, column 4: 
+PLS-00103: Encountered the symbol "end-of-file" when expecting one of the 
+following: 
+( begin case declare end exception exit for goto if loop mod 
+null pragma raise return select update while with 
+<an identifier> <a double-quoted delimited-identifier> 
+<a bind variable> << continue close current delete fetch lock 
+insert open rollback savepoint set sql execute commit forall 
+merge pipe purge 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  n number;
+  3  x number;
+  4  begin
+  5  n:=19;
+  6  something2(n,x);
+  7  dbms_output.put_line
+  8  (x);
+  9* end;
+SQL> /
+361                                                                             
+
+PL/SQL procedure successfully completed.
+
+SQL> create or replace function(a in number,b in number) return number is z number;
+  2  begin
+  3  z:=a*b;
+  4  return z;
+  5  end;
+  6  /
+create or replace function(a in number,b in number) return number is z number;
+                          *
+ERROR at line 1:
+ORA-04050: invalid or missing procedure, function, or package name 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create or replace function multi(a in number,b in number) return number is z number;
+  2  begin
+  3  z:=a*b;
+  4  return z;
+  5* end;
+SQL> /
+
+Function created.
+
+SQL> begin
+  2  .
+SQL> declare
+  2  n number;
+  3  begin
+  4  n:=multi(10,20);
+  5  end;
+  6  /
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  n number;
+  3  begin
+  4  n:=multi(10,20);
+  5  dbms_output.put_line(n);
+  6* end;
+SQL> /
+200                                                                             
+
+PL/SQL procedure successfully completed.
+
+SQL> spool off;
